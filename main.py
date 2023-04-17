@@ -14,10 +14,10 @@ from typing import List
 
 
 
-
 app = FastAPI(title='SquadMakers',
               description='API that can make you laugh using jokes from api.chucknorris.io and icanhazdadjoke.com/api',
               version=0.1)
+
 
 
 @app.get('/jokes')
