@@ -49,24 +49,24 @@ async def insert_joke(joke:JokeCreate):
         session.add(joke)
         session.commit()
         session.refresh(joke)
-        return joke
+        return {"joke":joke}
 
-@app.patch('/jokes',response_model=JokeResponse)
-async def update_joke(joke:JokeUpdate):
+@app.patch('/jokes/{number}',response_model=JokeResponse)
+async def update_joke(number:int,joke_data:JokeUpdate):
     with Session(engine) as session:
-        joke_update = session.get(Joke,joke.number)
-        if not joke_update:
+        joke = session.get(Joke, number)
+        if not joke:
             raise HTTPException(status_code=404, detail="Joke not found")
-        joke = joke.dict(exclude_unset=True)
-        for key, value in joke.items():
-            setattr(joke_update, key, value)
-        session.add(joke_update)
+        joke_data = joke_data.dict(exclude_unset=True)
+        for key, value in joke_data.items():
+            setattr(joke, key, value)
+        session.add(joke)
         session.commit()
-        session.refresh(joke_update)
-        return joke_update
+        session.refresh(joke)
+        return {"joke":joke}
 
 @app.delete('/jokes')
-async def delete_joke(number:int):
+async def delete_joke(number):
     with Session(engine) as session:
         joke = session.get(Joke, number)
         if not joke:

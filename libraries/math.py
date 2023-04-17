@@ -9,7 +9,7 @@ class Math:
         else:
             return self.gcd(b, a % b)
     
-    def lcm(self,numbers):
+    def least_common_multiple(self,numbers):
         """
         Find the least common multiple of a list of numbers.
         """

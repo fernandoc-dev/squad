@@ -3,7 +3,7 @@ from typing import Optional
 from sqlmodel import Field, SQLModel
 
 class JokeBase(SQLModel):
-    joke:str
+    joke: str = Field(min_length=1, max_length=500)
 
 class Joke(JokeBase, table=True):
     number:Optional[int] = Field(default=None, primary_key=True)
@@ -13,7 +13,6 @@ class JokeCreate(JokeBase):
 
 class JokeResponse(JokeBase):
     number: int
-    joke:str
 
 class JokeUpdate(JokeBase):
-    pass
+    number: int
